@@ -1,4 +1,4 @@
-package com.milk.support.ktx
+package com.milk.simple.ktx
 
 fun Any?.safeToLong(): Long {
     if (this == null) return 0L

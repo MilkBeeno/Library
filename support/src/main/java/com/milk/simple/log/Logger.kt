@@ -1,4 +1,4 @@
-package com.milk.support.log
+package com.milk.simple.log
 
 import android.util.Log
 import com.tencent.mmkv.BuildConfig

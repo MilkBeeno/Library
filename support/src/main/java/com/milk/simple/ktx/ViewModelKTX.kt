@@ -1,4 +1,4 @@
-package com.milk.support.ktx
+package com.milk.simple.ktx
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

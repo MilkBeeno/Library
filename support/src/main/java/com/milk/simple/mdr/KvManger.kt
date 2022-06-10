@@ -1,4 +1,4 @@
-package com.milk.support.mdr
+package com.milk.simple.mdr
 
 import android.os.Parcelable
 import com.tencent.mmkv.MMKV

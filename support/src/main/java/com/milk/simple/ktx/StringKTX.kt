@@ -1,4 +1,4 @@
-package com.milk.support.ktx
+package com.milk.simple.ktx
 
 fun String.replaceString(targetString: String, other: String = "XX"): String {
     if (!this.contains(other)) return this
