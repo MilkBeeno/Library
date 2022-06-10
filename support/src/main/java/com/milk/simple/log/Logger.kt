@@ -1,7 +1,5 @@
 package com.milk.simple.log
 
-import android.util.Log
-import com.tencent.mmkv.BuildConfig
 import timber.log.Timber
 
 object Logger {
@@ -9,13 +7,14 @@ object Logger {
     fun initialize(
         tree: LogTree = object : LogTree {
             override fun log(priority: Int, tag: String?, message: String, t: Throwable?) = Unit
-        }
+        },
+        isPrintLog: Boolean = false
     ) {
         Timber.plant(object : Timber.DebugTree() {
             override fun log(
                 priority: Int, tag: String?, message: String, t: Throwable?
             ) {
-                if (BuildConfig.DEBUG || Log.isLoggable("MyLog", Log.DEBUG)) {
+                if (isPrintLog) {
                     super.log(priority, tag, message, t)
                     tree.log(priority, tag, message, t)
                 }
