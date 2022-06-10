@@ -5,10 +5,10 @@ import timber.log.Timber
 object Logger {
 
     fun initialize(
+        isPrintLog: Boolean = false,
         tree: LogTree = object : LogTree {
             override fun log(priority: Int, tag: String?, message: String, t: Throwable?) = Unit
         },
-        isPrintLog: Boolean = false
     ) {
         Timber.plant(object : Timber.DebugTree() {
             override fun log(
