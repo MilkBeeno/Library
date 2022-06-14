@@ -55,22 +55,22 @@ private fun View.statusBarPadding() {
         layoutParams = when (parent) {
             is FrameLayout -> {
                 val params = layoutParams as FrameLayout.LayoutParams
-                params.topMargin = activity.obtainStatusBarHeight()
+                params.topMargin += activity.obtainStatusBarHeight()
                 params
             }
             is LinearLayout -> {
                 val params = layoutParams as LinearLayout.LayoutParams
-                params.topMargin = activity.obtainStatusBarHeight()
+                params.topMargin += activity.obtainStatusBarHeight()
                 params
             }
             is LinearLayoutCompat -> {
                 val params = layoutParams as LinearLayoutCompat.LayoutParams
-                params.topMargin = activity.obtainStatusBarHeight()
+                params.topMargin += activity.obtainStatusBarHeight()
                 params
             }
             is ConstraintLayout -> {
                 val params = layoutParams as ConstraintLayout.LayoutParams
-                params.topMargin = activity.obtainStatusBarHeight()
+                params.topMargin += activity.obtainStatusBarHeight()
                 params
             }
             else -> layoutParams
