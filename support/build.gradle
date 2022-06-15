@@ -10,7 +10,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.milk.simple'
                 artifactId = 'support'
-                version = '1.0.7'
+                version = '1.0.8'
             }
         }
     }

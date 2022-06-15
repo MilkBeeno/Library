@@ -40,12 +40,12 @@ fun Activity.obtainStatusBarHeight(): Int {
     return if (resourceId > 0) resources.getDimensionPixelSize(resourceId) else 0
 }
 
-fun Activity.immersiveStatusBar(view: View, dark: Boolean = true) {
+fun Activity.immersiveStatusBar(view: View? = null, dark: Boolean = true) {
     setStatusBarDark(dark)
     setStatusBarVisible(true)
     setStatusBarColor(Color.TRANSPARENT)
     WindowCompat.setDecorFitsSystemWindows(window, false)
-    view.statusBarPadding()
+    view?.statusBarPadding()
 }
 
 private fun View.statusBarPadding() {
