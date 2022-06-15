@@ -5,9 +5,9 @@ import android.os.Parcelable
 import com.tencent.mmkv.MMKV
 
 object KvManger {
-    private val kv = MMKV.defaultMMKV()
+    private val kv by lazy { MMKV.defaultMMKV() }
 
-    fun initializeKV(context: Context) {
+    fun initialize(context: Context) {
         MMKV.initialize(context)
     }
 
