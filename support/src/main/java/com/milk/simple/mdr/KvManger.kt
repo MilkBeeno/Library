@@ -1,10 +1,13 @@
 package com.milk.simple.mdr
 
+import android.content.Context
 import android.os.Parcelable
 import com.tencent.mmkv.MMKV
 
 object KvManger {
     private val kv = MMKV.defaultMMKV()
+
+    fun initializeKV(context: Context) = MMKV.initialize(context)
 
     fun put(key: String, value: Any?) {
         when (value) {
