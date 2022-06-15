@@ -7,7 +7,9 @@ import com.tencent.mmkv.MMKV
 object KvManger {
     private val kv = MMKV.defaultMMKV()
 
-    fun initializeKV(context: Context) = MMKV.initialize(context)
+    fun initializeKV(context: Context) {
+        MMKV.initialize(context)
+    }
 
     fun put(key: String, value: Any?) {
         when (value) {
