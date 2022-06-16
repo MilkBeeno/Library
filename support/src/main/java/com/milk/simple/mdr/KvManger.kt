@@ -37,4 +37,24 @@ object KvManger {
     fun getString(key: String, default: String = ""): String {
         return kv.decodeString(key, default) ?: default
     }
+
+    fun getInt(key: String, default: Int = 0): Int {
+        return kv.decodeInt(key, default)
+    }
+
+    fun getFloat(key: String, default: Float = 0f): Float {
+        return kv.decodeFloat(key, default)
+    }
+
+    fun getDouble(key: String, default: Double = 0.0): Double {
+        return kv.decodeDouble(key, default)
+    }
+
+    fun getLong(key: String, default: Long = 0L): Long {
+        return kv.decodeLong(key, default)
+    }
+
+    fun getByteArray(key: String, default: ByteArray = byteArrayOf()): ByteArray {
+        return kv.decodeBytes(key, default) ?: default
+    }
 }
