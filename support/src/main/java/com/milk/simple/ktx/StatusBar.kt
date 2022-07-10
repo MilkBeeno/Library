@@ -12,6 +12,13 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 
+fun Activity.immersiveStatusBar(dark: Boolean = true) {
+    setStatusBarDark(dark)
+    setStatusBarVisible(true)
+    setStatusBarColor(Color.TRANSPARENT)
+    WindowCompat.setDecorFitsSystemWindows(window, false)
+}
+
 fun Activity.setStatusBarVisible(isVisible: Boolean) {
     WindowCompat.setDecorFitsSystemWindows(window, isVisible)
     WindowInsetsControllerCompat(window, window.decorView).let { controller ->
@@ -34,21 +41,8 @@ fun Activity.setStatusBarDark(dark: Boolean = true) {
         .isAppearanceLightStatusBars = dark
 }
 
-fun Activity.obtainStatusBarHeight(): Int {
-    val resourceId: Int = resources
-        .getIdentifier("status_bar_height", "dimen", "android")
-    return if (resourceId > 0) resources.getDimensionPixelSize(resourceId) else 0
-}
 
-fun Activity.immersiveStatusBar(view: View? = null, dark: Boolean = true) {
-    setStatusBarDark(dark)
-    setStatusBarVisible(true)
-    setStatusBarColor(Color.TRANSPARENT)
-    WindowCompat.setDecorFitsSystemWindows(window, false)
-    view?.statusBarPadding()
-}
-
-private fun View.statusBarPadding() {
+fun View.statusBarPadding() {
     try {
         if (context !is Activity) return
         val activity = context as Activity
@@ -71,6 +65,38 @@ private fun View.statusBarPadding() {
             is ConstraintLayout -> {
                 val params = layoutParams as ConstraintLayout.LayoutParams
                 params.topMargin += activity.obtainStatusBarHeight()
+                params
+            }
+            else -> layoutParams
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+    }
+}
+
+fun View.navigationBarPadding() {
+    try {
+        if (context !is Activity) return
+        val activity = context as Activity
+        layoutParams = when (parent) {
+            is FrameLayout -> {
+                val params = layoutParams as FrameLayout.LayoutParams
+                params.bottomMargin += activity.obtainNavigationBarHeight()
+                params
+            }
+            is LinearLayout -> {
+                val params = layoutParams as LinearLayout.LayoutParams
+                params.bottomMargin += activity.obtainNavigationBarHeight()
+                params
+            }
+            is LinearLayoutCompat -> {
+                val params = layoutParams as LinearLayoutCompat.LayoutParams
+                params.bottomMargin += activity.obtainNavigationBarHeight()
+                params
+            }
+            is ConstraintLayout -> {
+                val params = layoutParams as ConstraintLayout.LayoutParams
+                params.bottomToBottom += activity.obtainNavigationBarHeight()
                 params
             }
             else -> layoutParams
