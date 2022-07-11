@@ -2,6 +2,7 @@ package com.milk.simple.ktx
 
 import android.app.Activity
 import android.graphics.Color
+import android.os.Build
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -78,30 +79,38 @@ fun View.navigationBarPadding() {
     try {
         if (context !is Activity) return
         val activity = context as Activity
-        layoutParams = when (parent) {
-            is FrameLayout -> {
-                val params = layoutParams as FrameLayout.LayoutParams
-                params.bottomMargin += activity.obtainNavigationBarHeight()
-                params
-            }
-            is LinearLayout -> {
-                val params = layoutParams as LinearLayout.LayoutParams
-                params.bottomMargin += activity.obtainNavigationBarHeight()
-                params
-            }
-            is LinearLayoutCompat -> {
-                val params = layoutParams as LinearLayoutCompat.LayoutParams
-                params.bottomMargin += activity.obtainNavigationBarHeight()
-                params
-            }
-            is ConstraintLayout -> {
-                val params = layoutParams as ConstraintLayout.LayoutParams
-                params.bottomToBottom += activity.obtainNavigationBarHeight()
-                params
-            }
-            else -> layoutParams
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) setParams(activity) else {
+            val differ = activity.obtainScreenRealHeight() - activity.obtainScreenHeight()
+            val offSize = activity.obtainNavigationBarHeight() + activity.obtainStatusBarHeight()
+            if (differ == offSize) setParams(activity)
         }
     } catch (e: Exception) {
         e.printStackTrace()
+    }
+}
+
+private fun View.setParams(activity: Activity) {
+    layoutParams = when (parent) {
+        is FrameLayout -> {
+            val params = layoutParams as FrameLayout.LayoutParams
+            params.bottomMargin += activity.obtainNavigationBarHeight()
+            params
+        }
+        is LinearLayout -> {
+            val params = layoutParams as LinearLayout.LayoutParams
+            params.bottomMargin += activity.obtainNavigationBarHeight()
+            params
+        }
+        is LinearLayoutCompat -> {
+            val params = layoutParams as LinearLayoutCompat.LayoutParams
+            params.bottomMargin += activity.obtainNavigationBarHeight()
+            params
+        }
+        is ConstraintLayout -> {
+            val params = layoutParams as ConstraintLayout.LayoutParams
+            params.bottomToBottom += activity.obtainNavigationBarHeight()
+            params
+        }
+        else -> layoutParams
     }
 }
