@@ -1,7 +1,6 @@
 package com.milk.simple.ktx
 
 import android.app.Activity
-import android.content.Context
 import android.content.res.Configuration
 import android.graphics.Insets
 import android.graphics.Rect
@@ -10,7 +9,7 @@ import android.util.DisplayMetrics
 import android.view.WindowInsets
 
 /**
- *   屏幕尺寸的大小获取
+ *   获取屏幕的宽度
  * - [WindowInsetsCompat.Type.statusBars()]      状态栏
  * - [WindowInsetsCompat.Type.navigationBars()]  底部导航栏
  * - [WindowInsetsCompat.Type.captionBar()]      标题栏
@@ -40,6 +39,13 @@ fun Activity.obtainScreenWidth(): Int {
     }
 }
 
+/**
+ *   获取屏幕的高度、不包括状态栏和导航栏高度
+ * - [WindowInsetsCompat.Type.statusBars()]      状态栏
+ * - [WindowInsetsCompat.Type.navigationBars()]  底部导航栏
+ * - [WindowInsetsCompat.Type.captionBar()]      标题栏
+ * - [WindowInsetsCompat.Type.systemBars()]      前三者全部
+ */
 fun Activity.obtainScreenHeight(): Int {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
         val windowMetrics = windowManager.currentWindowMetrics
@@ -55,7 +61,8 @@ fun Activity.obtainScreenHeight(): Int {
         } else {
             // portrait or tablet
             val navigationBarSize: Int = insets.bottom
-            bounds.height() - navigationBarSize
+            val statusBarSize: Int = insets.top
+            bounds.height() - navigationBarSize - statusBarSize
         }
     } else {
         val outMetrics = DisplayMetrics()
@@ -64,16 +71,51 @@ fun Activity.obtainScreenHeight(): Int {
     }
 }
 
-fun Context.obtainStatusBarHeight(): Int {
-    val resourceId: Int = resources
-        .getIdentifier("status_bar_height", "dimen", "android")
-    return if (resourceId > 0) resources.getDimensionPixelSize(resourceId) else 0
+/**
+ * 屏幕真实的高度、包括状态栏和导航栏
+ */
+fun Activity.obtainScreenRealHeight(): Int {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        val windowMetrics = windowManager.currentWindowMetrics
+        val bounds: Rect = windowMetrics.bounds
+        bounds.height()
+    } else {
+        val outMetrics = DisplayMetrics()
+        windowManager.defaultDisplay.getRealMetrics(outMetrics)
+        outMetrics.heightPixels
+    }
 }
 
-fun Context.obtainNavigationBarHeight(): Int {
-    val resourceId: Int = resources
-        .getIdentifier("navigation_bar_height", "dimen", "android")
-    return if (resourceId > 0) resources.getDimensionPixelSize(resourceId) else 0
+/**
+ *   获取状态栏的高度
+ * - [WindowInsetsCompat.Type.statusBars()]      状态栏
+ */
+fun Activity.obtainStatusBarHeight(): Int {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        val windowMetrics = windowManager.currentWindowMetrics
+        val insets: Insets = windowMetrics.windowInsets
+            .getInsetsIgnoringVisibility(WindowInsets.Type.statusBars())
+        insets.top
+    } else {
+        val resourceId: Int = resources
+            .getIdentifier("status_bar_height", "dimen", "android")
+        if (resourceId > 0) resources.getDimensionPixelSize(resourceId) else 0
+    }
 }
 
-
+/**
+ *   获取导航栏的高度
+ * - [WindowInsetsCompat.Type.navigationBars()]  底部导航栏
+ */
+fun Activity.obtainNavigationBarHeight(): Int {
+    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+        val windowMetrics = windowManager.currentWindowMetrics
+        val insets: Insets = windowMetrics.windowInsets
+            .getInsetsIgnoringVisibility(WindowInsets.Type.navigationBars())
+        insets.bottom
+    } else {
+        val resourceId: Int = resources
+            .getIdentifier("navigation_bar_height", "dimen", "android")
+        if (resourceId > 0) resources.getDimensionPixelSize(resourceId) else 0
+    }
+}
