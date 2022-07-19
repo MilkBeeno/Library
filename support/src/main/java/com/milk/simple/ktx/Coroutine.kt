@@ -1,5 +1,8 @@
 package com.milk.simple.ktx
 
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
+import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.*
 
 fun ioScope(action: suspend CoroutineScope.() -> Unit): Job {
@@ -30,4 +33,12 @@ suspend fun withMain(action: suspend () -> Unit) {
     withContext(Dispatchers.Main) {
         action.invoke()
     }
+}
+
+fun FragmentActivity.launch(action: suspend () -> Unit) {
+    lifecycleScope.launch { action() }
+}
+
+fun Fragment.launch(action: suspend () -> Unit) {
+    lifecycleScope.launch { action() }
 }
