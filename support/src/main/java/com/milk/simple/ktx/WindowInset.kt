@@ -108,7 +108,7 @@ private fun View.setParams(activity: Activity) {
         }
         is ConstraintLayout -> {
             val params = layoutParams as ConstraintLayout.LayoutParams
-            params.bottomToBottom += activity.obtainNavigationBarHeight()
+            params.bottomMargin += activity.obtainNavigationBarHeight()
             params
         }
         else -> layoutParams

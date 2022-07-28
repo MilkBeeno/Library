@@ -9,8 +9,7 @@ import android.view.View
 abstract class MultipleClickListener(
     private val ignoreDifferView: Boolean = false,
     private val minInterval: Long = 500L
-) :
-    View.OnClickListener {
+) : View.OnClickListener {
     private var lastClickView: View? = null
     private var lastClickTime: Long = 0
     private val currentTime: Long

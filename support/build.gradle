@@ -10,7 +10,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.milk.simple'
                 artifactId = 'support'
-                version = '1.2.3'
+                version = '1.2.4'
             }
         }
     }
@@ -42,8 +42,6 @@ android {
 }
 
 dependencies {
-    // Kotlin 核心扩展库
-    api('androidx.core:core-ktx:1.8.0')
     // AppCompat 扩展库
     api('androidx.appcompat:appcompat:1.4.2')
     // Constraintlayout 依赖库
