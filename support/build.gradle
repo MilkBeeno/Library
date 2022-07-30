@@ -10,7 +10,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.milk.simple'
                 artifactId = 'support'
-                version = '1.2.6'
+                version = '1.2.7'
             }
         }
     }
@@ -35,7 +35,7 @@ android {
         }
 
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
