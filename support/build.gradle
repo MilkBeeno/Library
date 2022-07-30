@@ -10,7 +10,7 @@ afterEvaluate {
                 from components.release
                 groupId = 'com.milk.simple'
                 artifactId = 'support'
-                version = '1.2.5'
+                version = '1.2.6'
             }
         }
     }
@@ -25,6 +25,19 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+    buildTypes {
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
     }
 
     compileOptions {
