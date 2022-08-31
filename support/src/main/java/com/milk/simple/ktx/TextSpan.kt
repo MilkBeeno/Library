@@ -19,7 +19,8 @@ fun TextView.setSpannableColor(vararg targets: Pair<String, Int>) {
         targets.forEach {
             if (content.contains(it.first)) {
                 val colorSpan = ForegroundColorSpan(it.second)
-                val startIndex = content.indexOf(it.first, ignoreCase = true)
+                var startIndex = content.indexOf(it.first, ignoreCase = true)
+                startIndex = if (startIndex < 0) 0 else startIndex
                 val endIndex = startIndex + it.first.length
                 val colorFlags = Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 builder.setSpan(colorSpan, startIndex, endIndex, colorFlags)
@@ -38,7 +39,8 @@ fun TextView.setSpannableClick(vararg targets: Pair<String, ClickableSpan>) {
         val builder = SpannableStringBuilder(content)
         targets.forEach {
             if (content.contains(it.first)) {
-                val startIndex = content.indexOf(it.first, ignoreCase = true)
+                var startIndex = content.indexOf(it.first, ignoreCase = true)
+                startIndex = if (startIndex < 0) 0 else startIndex
                 val endIndex = startIndex + it.first.length
                 val colorFlags = Spannable.SPAN_INCLUSIVE_EXCLUSIVE
                 builder.setSpan(it.second, startIndex, endIndex, colorFlags)
