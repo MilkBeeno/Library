@@ -23,7 +23,7 @@ fun TextView.setSpannableColor(vararg targets: Pair<String, Int>) {
                 startIndex = if (startIndex < 0) 0 else startIndex
                 val endIndex = startIndex + it.first.length
                 val colorFlags = Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-                if (startIndex > 0 && endIndex < content.length) {
+                if (startIndex > 0 && endIndex < content.length && startIndex != endIndex) {
                     builder.setSpan(colorSpan, startIndex, endIndex, colorFlags)
                 }
             }
